@@ -107,7 +107,7 @@ If you have the passpharace added to ssh key then it will be easier to run it ma
 *** Step 4.2 - Execute playbook
 Please execute following command to run the playbopk and start the process.
 #+BEGIN_SRC bash
-  ansible-playbook -i server.inventory.ini database_backup_playbook.yaml --vault-vault-password
+  ansible-playbook -i server.inventory.ini database_backup_playbook.yaml --ask-vault-password
 #+END_SRC
 
 *** Step 4.3: Enter vault password.
