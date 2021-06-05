@@ -8,7 +8,7 @@ We will create an [[https://www.ansible.com][ansible]] playbook (step by stepp p
  - [[https://docs.oracle.com/en/cloud/cloud-at-customer/occ-get-started/generate-ssh-key-pair.html][ssh key]] (make sure public key has been uploaded to remote server)
  - [[https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html][ansible]]
 
-** Create inventory file
+** Step 1: Create inventory file
 Create new file as 'server.inventory.ini'
 #+BEGIN_SRC
 touch server.inventory.ini
@@ -24,8 +24,8 @@ ansible_connection=ssh
 ansible_user= # remote server username
 #+END_SRC
 
-** Create vault file
-**** Step 1: Create file with secrets
+** Step 2: Create vault file
+*** Step 2.1: Create file with secrets
 Create new file as 'database_vault.yaml'
 #+BEGIN_SRC
 touch database_vault.yaml
@@ -38,7 +38,7 @@ Add the following details
  db_user_password: # database user password here
 #+END_SRC
 
-**** Step 2: Encrypt secret file
+*** Step 2.2: Encrypt secret file
 Please run the following command to [[https://www.digitalocean.com/community/tutorials/how-to-use-vault-to-protect-sensitive-ansible-data-on-ubuntu-16-04#:~:text=To%20create%20a%20new%20file,encrypted%20YAML%20file%20called%20vault.][encrypt]] newly created secrets file.
 #+BEGIN_SRC
  ansible-vault encrypt database_vault.yaml
@@ -51,7 +51,7 @@ Please run the following command to [[https://www.digitalocean.com/community/tut
  Encryption successful
 #+END_SRC
 
-** Create playbook
+*** Step 3: Create playbook
 Create new file as 'database_backup_playbook.yaml'
 #+BEGIN_SRC
 touch database_backup_playbook.yaml
@@ -95,21 +95,20 @@ Add the following details
           msg: Database have been downloaded successfully.
 #+END_SRC
 
+*** Step 4: Time to playbook to run manually in command-line:
 
-** Time to playbook to run manually in command-line:
-
-**** Step 1 - Run ssh-agent
+*** Step 4.1 - Run ssh-agent
 If you have the passpharace added to ssh key then it will be easier to run it manually.
 #+begin_src
   eval $(ssh-agent)
   ssh-add ./path/to/ssh/key
 #+end_src
 
-**** Step 2 - Execute playbook
+*** Step 4.2 - Execute playbook
 Please execute following command to run the playbopk and start the process.
 #+BEGIN_SRC bash
   ansible-playbook -i server.inventory.ini database_backup_playbook.yaml --vault-vault-password
 #+END_SRC
 
-**** Step 3: Enter vault password.
+*** Step 4.3: Enter vault password.
 Please enter the vault password so that ansible can decyrpt the `database_vault.yaml` variables to use in the playbook.
