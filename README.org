@@ -42,14 +42,16 @@ Add the following details
 Please run the follwing command to encrypt newly created secrets file.
 #+BEGIN_SRC
  ansible-vault encrypt database_vault.yaml
- 
+#+END_SRC
+
+#+BEGIN_SRC
  # output
  New Vault password: 
  Confirm New Vault password:
  Encryption successful
 #+END_SRC
 
-** Crate playbook to run manually in command-line
+** Create playbook
 Create new file as 'database_backup_playbook.yaml'
 #+BEGIN_SRC
 touch database_backup_playbook.yaml
