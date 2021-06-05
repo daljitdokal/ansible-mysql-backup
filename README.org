@@ -9,7 +9,12 @@ We will create an [[https://www.ansible.com][ansible]] palybook to automate the 
  - [[https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html][ansible]]
 
 ** Create inventory file
-File name: server.inventory.ini
+Create new file as 'server.inventory.ini'
+#+BEGIN_SRC
+touch server.inventory.ini
+#+END_SRC
+
+Add the following details
 #+BEGIN_SRC
 [Server-VPS]
 # server address here
@@ -21,7 +26,12 @@ ansible_user= # remote server username
 
 ** Create vault file
 *** Step 1: Create file with secrets
-File name: database_vault.yaml
+Create new file as 'database_vault.yaml'
+#+BEGIN_SRC
+touch database_vault.yaml
+#+END_SRC
+
+Add the following details
 #+BEGIN_SRC
  db_name: # database name here
  db_user_name: # database user name here
@@ -40,7 +50,12 @@ Please run the follwing command to encrypt newly created secrets file.
 #+END_SRC
 
 ** Crate playbook to run manually in command-line
-File name: database_backup_playbook.yaml
+Create new file as 'database_backup_playbook.yaml'
+#+BEGIN_SRC
+touch database_backup_playbook.yaml
+#+END_SRC
+
+Add the following details
 #+BEGIN_SRC yaml :tangle database_backup_playbook.yaml
   ---
   - hosts: Server-VPS
