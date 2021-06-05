@@ -8,7 +8,6 @@ We will create an [[https://www.ansible.com][ansible]] palybook to automate the 
  - [[https://docs.oracle.com/en/cloud/cloud-at-customer/occ-get-started/generate-ssh-key-pair.html][ssh key]] (make sure public key has been uploaded to remote server)
  - [[https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html][ansible]]
 
----
 ** Create inventory file
 File name: server.inventory.ini
 #+BEGIN_SRC
@@ -79,7 +78,6 @@ File name: database_backup_manual.yaml
           msg: Database have been downloaded successfully.
 #+END_SRC
 
----
 
 ** Time to playbook to run manually in command-line:
 
