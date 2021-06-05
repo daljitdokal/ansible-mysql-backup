@@ -38,7 +38,7 @@ Add the following details
  db_user_password: # database user password here
 #+END_SRC
 
-*** Step 2: Encryt secret file
+*** Step 2: Encrypt secret file
 Please run the following command to [[https://www.digitalocean.com/community/tutorials/how-to-use-vault-to-protect-sensitive-ansible-data-on-ubuntu-16-04#:~:text=To%20create%20a%20new%20file,encrypted%20YAML%20file%20called%20vault.][encrypt]] newly created secrets file.
 #+BEGIN_SRC
  ansible-vault encrypt database_vault.yaml
