@@ -42,6 +42,7 @@ File name: database_vault.yaml
 #+END_SRC
 
 ** Crate playbook to run manually in command-line
+File name: database_backup_manual.yaml
 #+BEGIN_SRC yaml :tangle database_backup_manual.yaml
   ---
   - hosts: Server-VPS
