@@ -9,7 +9,7 @@ We will create an [[https://www.ansible.com][ansible]] palybook to automate the 
  - ansible
  - Instance of mysql running
 
-* Crate playbook to run manually in command-line
+** Crate playbook to run manually in command-line
 #+BEGIN_SRC yaml :tangle database_backup_manual.yaml
   ---
   - hosts: Server-VPS
