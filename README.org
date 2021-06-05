@@ -17,7 +17,7 @@ We will create an [[https://www.ansible.com][ansible]] palybook to automate the 
     tasks:
       - name: Create variables
         set_fact:
-          db_file_name: "db_backup/<db_name>_{{ ansible_date_time.date | replace('-','') }}.sql"
+          db_file_name: "db_backup/{{ db_name }}_{{ ansible_date_time.date | replace('-','') }}.sql"
       
       - name: Confirm hostname
         debug:
