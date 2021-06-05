@@ -25,8 +25,8 @@ ansible_user= # remote server username
 File name: database_vault.yaml
 #+BEGIN_SRC
  db_name: # database name here
- db_user_name: # password here
- db_user_password: # database name here
+ db_user_name: # database user name here
+ db_user_password: # database user password here
 #+END_SRC
 
 *** Step 2: Encryt secret file
