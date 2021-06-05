@@ -1,0 +1,61 @@
+# Backup MySql databases from remote server
+
+** Description
+I have wordpress websites running on VPS server and I need a solution to backup these databases regulerly.
+We will create an [[https://www.ansible.com][ansible]] palybook to automate the solution.
+
+** Prerequisites
+ - ssh key (make sure public key has been uploaded to remote server)
+ - ansible
+ - Instance of mysql running
+
+* Crate playbook to run manually in command-line
+#+BEGIN_SRC yaml :tangle database_backup_manual.yaml
+  ---
+  - hosts: Server-VPS
+    gather_facts: true
+    tasks:
+      - name: Create variables
+        set_fact:
+          db_file_name: "db_backup/<db_name>_{{ ansible_date_time.date | replace('-','') }}.sql"
+      
+      - name: Confirm hostname
+        debug:
+          msg: Logged into the server.
+
+      - name: Download Database to server
+        shell: |
+          mysqldump -u {{ db_user_name}} -p"{{ db_user_password }}" {{ db_name }} --single-transaction --quick --lock-tables=false > "{{ db_file_name }}" --no-tablespaces
+        no_log: true
+
+      - name: Wait until the database backup completed on server
+        wait_for:
+          path: "{{ db_file_name }}"
+          state: present
+          msg: "Timeout to find file {{ db_file_name }}"
+
+      - name: Downloading backup to local computer
+        ansible.builtin.fetch:
+          src: "{{ db_file_name }}"
+          dest: "{{ db_file_name }}"
+          flat: yes
+
+      - name: Download completed
+        debug:
+          msg: Database have been downloaded successfully.
+#+END_SRC
+
+Time to playbook to run manually in command-line:
+
+** Step 1 - Run ssh-agent
+If you have the passpharace added to ssh key then it will be easier to run it manually.
+
+#+begin_src
+  eval $(ssh-agent)
+  ssh-add ./path/to/ssh/key
+#+end_src
+
+** Step 2 - Execute playbook
+#+BEGIN_SRC bash
+  ansible-playbook -i server.name.ini database_backup_manual.yaml --vault-password-file <path/to/ansible/vault/password/file>
+#+END_SRC
