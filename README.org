@@ -50,12 +50,12 @@ We will create an [[https://www.ansible.com][ansible]] palybook to automate the 
 ** Create inventory file
 File name: server.inventory.ini
 #+BEGIN_SRC
- [Server-VPS]
- # server address here
+[Server-VPS]
+# server address here
 
 [Server-VPS:vars]
- ansible_connection=ssh
- ansible_user= # remote server username
+ansible_connection=ssh
+ansible_user= # remote server username
 #+END_SRC
 
 ** Create vault file
