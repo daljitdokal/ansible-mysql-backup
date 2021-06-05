@@ -14,6 +14,8 @@ We will create an [[https://www.ansible.com][ansible]] palybook to automate the 
   ---
   - hosts: Server-VPS
     gather_facts: true
+    vars_files:
+    - database_vault.yaml
     tasks:
       - name: Create variables
         set_fact:
@@ -45,17 +47,51 @@ We will create an [[https://www.ansible.com][ansible]] palybook to automate the 
           msg: Database have been downloaded successfully.
 #+END_SRC
 
-Time to playbook to run manually in command-line:
+** Create inventory file
+File name: server.inventory.ini
+#+BEGIN_SRC
+ [Server-VPS]
+ # server address here
 
-** Step 1 - Run ssh-agent
+[Server-VPS:vars]
+ ansible_connection=ssh
+ ansible_user= # remote server username
+#+END_SRC
+
+** Create vault file
+*** Step 1: Create file with secrets
+File name: database_vault.yaml
+#+BEGIN_SRC
+ db_name: # database name here
+ db_user_name: # password here
+ db_user_password: # database name here
+#+END_SRC
+
+*** Step 2: Encryt secret file
+File name: database_vault.yaml
+#+BEGIN_SRC
+ ansible-vault encrypt database_vault.yaml
+ 
+ # output
+ New Vault password: 
+ Confirm New Vault password:
+ Encryption successful
+#+END_SRC
+
+** Time to playbook to run manually in command-line:
+
+*** Step 1 - Run ssh-agent
 If you have the passpharace added to ssh key then it will be easier to run it manually.
-
 #+begin_src
   eval $(ssh-agent)
   ssh-add ./path/to/ssh/key
 #+end_src
 
-** Step 2 - Execute playbook
+*** Step 2 - Execute playbook
+Please execute following command to run the playbopk and start the process.
 #+BEGIN_SRC bash
-  ansible-playbook -i server.name.ini database_backup_manual.yaml --vault-password-file <path/to/ansible/vault/password/file>
+  ansible-playbook -i server.inventory.ini database_backup_manual.yaml --vault-vault-password
 #+END_SRC
+
+*** Step 3: Enter vault password.
+Please enter the vault password so that ansible can decyrpt the `database_vault.yaml` variables to use in the playbook.
