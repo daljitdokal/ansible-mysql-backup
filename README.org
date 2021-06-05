@@ -5,9 +5,8 @@ I have wordpress websites running on VPS server and I need a solution to backup 
 We will create an [[https://www.ansible.com][ansible]] palybook to automate the solution.
 
 ** Prerequisites
- - ssh key (make sure public key has been uploaded to remote server)
- - ansible
- - Instance of mysql running
+ - [[https://docs.oracle.com/en/cloud/cloud-at-customer/occ-get-started/generate-ssh-key-pair.html][ssh key]] (make sure public key has been uploaded to remote server)
+ - [[https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html][ansible]]
 
 ---
 ** Create inventory file
