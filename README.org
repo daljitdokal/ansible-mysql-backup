@@ -64,7 +64,7 @@ Add the following details
   - hosts: Server-VPS
     gather_facts: true
     vars_files:
-    - database_vault.yaml
+      - database_vault.yaml
     tasks:
       - name: Create variables
         set_fact:
