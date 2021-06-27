@@ -130,44 +130,69 @@ It's the open source version of the Ansible Tower. The AWX allows you to manage 
 We will be using the recommended option to install AWX is in Kubernetes with [awx-operator](https://guthub.com/ansible/awx-operator).
 
 ** Step 1 - Create awx operator and custom requirements file.
-- Download `awx-operator` and create `awx.yaml` file to add custom requirements.
+Download `awx-operator` and create `awx.yaml` file to add custom requirements.
 #+begin_src
  wget https://raw.githubusercontent.com/ansible/awx-operator/0.11.0/deploy/awx-operator.yaml
 
  touch awx.yaml
 #+end_src
 
-- Add following code to `awx.yaml`
+Add following code to `awx.yaml`
 #+begin_src
-
+---
+apiVersion: awx.ansible.com/v1beta1
+kind: AWX
+metadata:
+  name: awx
+spec:
+  service_type: NodePort
+  ingress_type: ingress
+  hostname: awx.example.com
+  service_labels: |
+    environment: production
+  web_resource_requirements:
+    requests:
+      cpu: 256m
+      memory: 512Mi
+    limits:
+      cpu: 512m
+      memory: 1024Mi
+  task_resource_requirements:
+    requests:
+      cpu: 256m
+      memory: 512Mi
+    limits:
+      cpu: 512m
+      memory: 1024Mi
 #+end_src
 
 ** Step 2 - Create new `namespace` in kubernete for awx
-- Create new namespace
+Create new namespace
 #+begin_src
  sudo k3s kubectl create namespace awx
 #+end_src
 
-- Create new `awx-operator` from .yaml file in newly created namespace
+Create new `awx-operator` from .yaml file in newly created namespace
 #+begin_src
   sudo k3s kubectl apply -f awx-operator.yaml -n awx
 #+end_src
 
 Wait a few minutes and you should have the awx-operator running.
 
-- Create `awx` with custom requirements file.
+Create `awx` with custom requirements file.
 #+begin_src
  sudo k3s kubectl apply -f awx.yaml -n awx
 #+end_src
 
+** Wait for awx to be install successfully.
 After a few minutes, the new AWX instance will be deployed. One can look at the operator pod logs in order to know where the installation process is at.
 This can be done by running the following command:
 #+begin_src
  sudo k3s kubectl logs -f deployments/awx-operator.
 #+end_src
 
-- Login to `awx` web GUI.
- Once deployed, the AWX instance will be accessible url `http://localhost:3124`
+** Login to `awx` web GUI.
+Once deployed, the AWX instance will be accessible url `http://localhost:3124`
 
 By default, the admin user is `admin` and the password is available in the <resourcename>-admin-password secret.
 To retrieve the admin password, run the folling command:
