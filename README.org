@@ -192,7 +192,7 @@ This can be done by running the following command:
 #+end_src
 
 ** Login to `awx` web GUI.
-Once deployed, the AWX instance will be accessible url `http://localhost:3124`
+Once deployed, the AWX instance will be accessible url `http://localhost:32245`
 
 By default, the admin user is `admin` and the password is available in the <resourcename>-admin-password secret.
 To retrieve the admin password, run the folling command:
