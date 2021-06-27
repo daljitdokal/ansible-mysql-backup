@@ -113,3 +113,66 @@ Please execute following command to run the playbopk and start the process.
 
 *** Step 4.3: Enter vault password.
 Please enter the vault password so that ansible can decyrpt the `database_vault.yaml` variables to use in the playbook.
+
+* Install `AWX` with `k3s`cluster
+[[https://k3s.io][k3s]] is a highly available, certified Kubernetes distribution designed for production workloads in unattended, resource-constrained, remote locations or inside IoT appliances. K3s is packaged as a single <40MB binary that reduces the dependencies and steps needed to install, run and auto-update a production Kubernetes cluster.
+
+Please use the following command to install k3s cluster on single node.
+ #+begin_src
+  curl -sfL https://get.k3s.io | sh -
+
+  # Check for Ready node,takes maybe 30 seconds
+  k3s kubectl get node
+#+end_src
+
+AWX is an open source web application that provides a user interface, REST API, and task engine for Ansible.
+It's the open source version of the Ansible Tower. The AWX allows you to manage Ansible playbooks, inventories, and schedule jobs to run using the web interface.
+We will be using the recommended option to install AWX is in Kubernetes with [awx-operator](https://guthub.com/ansible/awx-operator).
+
+** Step 1 - Create awx operator and custom requirements file.
+- Download `awx-operator` and create `awx.yaml` file to add custom requirements.
+#+begin_src
+ wget https://raw.githubusercontent.com/ansible/awx-operator/0.11.0/deploy/awx-operator.yaml
+
+ touch awx.yaml
+#+end_src
+
+- Add following code to `awx.yaml`
+#+begin_src
+
+#+end_src
+
+** Step 2 - Create new `namespace` in kubernete for awx
+- Create new namespace
+#+begin_src
+ sudo k3s kubectl create namespace awx
+#+end_src
+
+- Create new `awx-operator` from .yaml file in newly created namespace
+#+begin_src
+  sudo k3s kubectl apply -f awx-operator.yaml -n awx
+#+end_src
+
+Wait a few minutes and you should have the awx-operator running.
+
+- Create `awx` with custom requirements file.
+#+begin_src
+ sudo k3s kubectl apply -f awx.yaml -n awx
+#+end_src
+
+After a few minutes, the new AWX instance will be deployed. One can look at the operator pod logs in order to know where the installation process is at.
+This can be done by running the following command:
+#+begin_src
+ sudo k3s kubectl logs -f deployments/awx-operator.
+#+end_src
+
+- Login to `awx` web GUI.
+ Once deployed, the AWX instance will be accessible url `http://localhost:3124`
+
+By default, the admin user is `admin` and the password is available in the <resourcename>-admin-password secret.
+To retrieve the admin password, run the folling command:
+#+begin_src
+ sudo k3s kubectl get secret awx-admin-password -o jsonpath="{.data.password}" | base64 --decode
+#+end_src
+
+You just completed the most basic install of an AWX instance. Congratulations!!!!
