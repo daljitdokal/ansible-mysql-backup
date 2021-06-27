@@ -115,4 +115,4 @@ Please execute following command to run the playbopk and start the process.
 Please enter the vault password so that ansible can decyrpt the `database_vault.yaml` variables to use in the playbook.
 
 * Install `AWX` on `k3s`cluster
-Please use the following link to view step by step docmentation to install [https://github.com/daljitdokal/install-awx-with-k3s-cluster][awx]] on [[https://k3s.io][k3s]].
+Please use the following link to view step by step docmentation to install [[https://github.com/daljitdokal/install-awx-with-k3s-cluster][awx]] on [[https://k3s.io][k3s]].
