@@ -1,0 +1,36 @@
+---
+- hosts: Geeky-VPS
+  gather_facts: true
+  tasks:
+    - name: Create variables
+      set_fact:
+        db_file_name: "{{ db_backup_folder_path }}/{{ db_name }}_{{ ansible_date_time.date | replace('-','') }}.sql"
+        local_db_file_name: "{{ local_db_backup_folder_path }}/{{ db_name }}_{{ ansible_date_time.date | replace('-','') }}.sql"
+
+    - name: Confirm hostname
+      debug:
+        msg: Logged into the server.
+
+    - name: Removing old backups
+      shell: |
+        cd {{ db_backup_folder_path }} && rm {{ db_file_name_pattern_to_delete }}
+    - name: Download Database to server
+      shell: |
+        mysqldump -u {{ db_user_name }} -p"{{ db_user_password }}" {{ db_name }} --single-transaction --quick --lock-tables=false > "{{ db_file_name }}" --no-tablespaces
+      no_log: true
+
+    - name: Wait until the database backup completed on server
+      wait_for:
+        path: "{{ db_file_name }}"
+        state: present
+        msg: "Timeout to find file {{ db_file_name }}"
+
+    - name: Downloading backup to local computer
+      ansible.builtin.fetch:
+        src: "{{ db_file_name }}"
+        dest: "{{ local_db_file_name }}"
+        flat: yes
+
+    - name: Download completed
+      debug:
+        msg: Database have been downloaded successfully.
