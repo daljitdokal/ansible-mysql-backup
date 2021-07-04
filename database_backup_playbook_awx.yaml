@@ -1,5 +1,5 @@
 ---
-- hosts: Geeky-VPS
+- hosts: all
   gather_facts: true
   tasks:
     - name: Create variables
