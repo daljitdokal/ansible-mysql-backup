@@ -10,10 +10,15 @@
     - name: Confirm hostname
       debug:
         msg: Logged into the server.
+        
+    - name: Debug
+      shell: |
+        whoami && ls -la /mnt
 
     - name: Removing old backups
       shell: |
         cd {{ db_backup_folder_path }} && rm {{ db_file_name_pattern_to_delete }}
+
     - name: Download Database to server
       shell: |
         mysqldump -u {{ db_user_name }} -p"{{ db_user_password }}" {{ db_name }} --single-transaction --quick --lock-tables=false > "{{ db_file_name }}" --no-tablespaces
