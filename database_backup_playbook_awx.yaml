@@ -14,6 +14,7 @@
     - name: Debug
       shell: |
         whoami && ls -la /mnt
+      delegate_to: localhost
 
     - name: Removing old backups
       shell: |
