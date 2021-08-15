@@ -19,6 +19,7 @@
     - name: Removing old backups
       shell: |
         cd {{ db_backup_folder_path }} && rm {{ db_file_name_pattern_to_delete }}
+      ignore_errors: yes
 
     - name: Download Database to server
       shell: |
