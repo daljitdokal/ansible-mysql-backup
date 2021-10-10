@@ -24,7 +24,7 @@
     - name: Download Database to server
       shell: |
         mysqldump -u {{ db_user_name }} -p"{{ db_user_password }}" {{ db_name }} --single-transaction --quick --lock-tables=false > "{{ db_file_name }}" --no-tablespaces
-      no_log: false
+      no_log: true
 
     - name: Wait until the database backup completed on server
       wait_for:
