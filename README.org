@@ -115,4 +115,6 @@ Please execute following command to run the playbopk and start the process.
 Please enter the vault password so that ansible can decyrpt the `database_vault.yaml` variables to use in the playbook.
 
 * Install `AWX` on `k3s`cluster
-Please use the following [[https://github.com/daljitdokal/install-awx-with-k3s-cluster][link]] to view step by step docmentation to install `awx` on `k3s`.
+
+- Please use the following [[https://github.com/daljitdokal/install-awx-with-k3s-cluster][link]] to view step by step docmentation to install `awx` on `k3s`.
+- Please use the following [[https://github.com/daljitdokal/raspberry-pi-ubuntu-server-k3s-awx-ansible-automated-setup][link]] to view Step by step process to build ubuntu-server on raspberry-pi with k3s, kubernetes-dashboard, awx and awx job template with ansible paybooks (mysql datbase backup from remote server).
