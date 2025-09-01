@@ -4,8 +4,8 @@
   tasks:
     - name: Create variables
       set_fact:
-        db_file_name: "{{ db_backup_folder_path }}/{{ db_name }}_{{ ansible_date_time.date | replace('-','') }}.sql"
-        local_db_file_name: "{{ local_db_backup_folder_path }}/{{ db_name }}_{{ ansible_date_time.date | replace('-','') }}.sql"
+        db_file_name: "{{ db_backup_folder_path }}/{{ db_name }}_{{ lookup('pipe', 'date +%Y%m%d_%H%M%S') }}.sql"
+        local_db_file_name: "{{ local_db_backup_folder_path }}/{{ db_name }}_{{ lookup('pipe', 'date +%Y%m%d_%H%M%S') }}.sql"
 
     - name: Confirm hostname
       debug:
